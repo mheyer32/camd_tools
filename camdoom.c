@@ -142,7 +142,8 @@ int __stdargs main(int argc, char *argv[])
     Printf("%s patched to play music via CAMD.\n Press RETURN to undo the patch and exit.", (ULONG)libName);
     Flush(Output());
 
-    getchar();
+    char c;
+    Read(Input(), &c, 1);
 
 shutdown:
 
