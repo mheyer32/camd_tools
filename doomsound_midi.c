@@ -215,3 +215,11 @@ __stdargs int Forward_Sfx_Done(int cnum)
 {
     return Fwd_Sfx_Done(cnum);
 }
+
+#ifndef NDEBUG
+struct WBStartup *_WBenchMsg = NULL;
+void exit(int code)
+{
+    while(1);
+}
+#endif
