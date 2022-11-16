@@ -389,7 +389,7 @@ __stdargs void CAMD_Mus_Play(int handle, int looping)
     if (!song)
         return;
 
-    SendPlayerMessage(PC_STOP, handle);
+    SendPlayerMessage(PC_STOP, 0);
 
     song->looping = !!looping;
 
@@ -401,7 +401,7 @@ __stdargs void CAMD_Mus_Stop(int handle)
     Song *song = (Song *)handle;
     if (!song)
         return;
-    // what if handle is not currently playing song?
+    // what if handle is not the currently playing song?
     SendPlayerMessage(PC_STOP, 0);
 }
 
@@ -410,7 +410,7 @@ __stdargs void CAMD_Mus_Pause(int handle)
     Song *song = (Song *)handle;
     if (!song)
         return;
-    // what if handle is not currently playing song?
+    // what if handle is not the currently playing song?
     SendPlayerMessage(PC_PAUSE, 0);
 }
 
@@ -821,13 +821,19 @@ static void __stdargs MidiPlayerTask(void)
                     PlaySong(playingSong);
                     break;
                 case PC_STOP:
-                    StopSong(playingSong);
+                    if (playingSong) {
+                        StopSong(playingSong);
+                    }
                     break;
                 case PC_RESUME:
-                    playingSong->state = PLAYING;
+                    if (playingSong) {
+                        playingSong->state = PLAYING;
+                    }
                     break;
                 case PC_PAUSE:
-                    playingSong->state = PAUSED;
+                    if (playingSong) {
+                        playingSong->state = PAUSED;
+                    }
                 case PC_VOLUME:
                     SetMasterVolume(msg->data);
                     break;
