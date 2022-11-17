@@ -89,7 +89,7 @@ DoomSnd.h: doomsound.fd doomsound.h Makefile
 DoomSndFwd.h: doomsound_fwd.fd doomsound_fwd.h Makefile
 	fd2pragma --infile doomsound_fwd.fd --clib doomsound_fwd.h --externc --special 47
 
-doomsound_midi.library: doomsound_midi.c musplay.c | DoomSndFwd.h Makefile
+doomsound_midi.library: doomsound_midi.c musplay.c exit.s | DoomSndFwd.h Makefile
 	$(CC) $(CFLAGS_DOOMSOUND) -I./ -flto -ramiga-lib -fbaserel -o $@ $^
 	$(STRIP) --strip-debug --strip-unneeded --strip-all $@ -o  $(BINDIR)/$@
 
